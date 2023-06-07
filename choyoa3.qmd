@@ -1,0 +1,45 @@
+---
+title: "CHOYOA 3"
+format: html
+editor: visual
+---
+
+```{r}
+#loading libraries
+library(ggplot2)
+library(tibble)
+```
+
+```{r}
+mpg |>
+  ggplot(aes(displ, hwy, colour = drv)) + #creating ggplot, changing color
+  geom_point() #adding points
+```
+```{r}
+mpg |>
+  ggplot(aes(displ, hwy, colour = drv, size = cyl)) + #varying the size of the dots
+  geom_point(show.legend = FALSE) + 
+  theme_void() + #getting rid of the teme
+  scale_color_brewer() #creating a blue theme
+
+```
+```{r}
+mpg |>
+  ggplot(aes(displ, hwy, colour = drv)) + 
+  geom_point(show.legend = FALSE, size = 4) + 
+  geom_point(show.legend = FALSE, size = 1, colour = "#222222") + #adding black dots to the middle of the points
+  coord_polar() + #tweaking code to make the points circular
+  theme_void() + 
+  scale_color_brewer()
+```
+Exercise:
+```{r}
+mpg |>
+  ggplot(aes(displ, hwy, colour = drv)) + #using the mpg dataset to create ggplot
+  geom_point(show.legend = FALSE, size = 7) + #adding points
+  geom_line(show.legend = FALSE, size = 3, colour = "green") + #converting the dots in the middle to lines, changing the color of the lines from blue to green
+  coord_polar() + #tweaking code to make the points circular
+  theme_void() + 
+  scale_color_brewer()
+```
+
