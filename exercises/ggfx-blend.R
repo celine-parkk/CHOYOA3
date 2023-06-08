@@ -8,7 +8,7 @@ library(ggfx)
 tree <- flametree_grow(
   seed = 1, 
   time = 9, 
-  angle = c(-15, 15, 30)
+  angle = c(-15, 20, 30) #adjusting the angle of the tree
 )
 
 leaf <- tree |> filter(id_leaf == TRUE)
@@ -17,7 +17,7 @@ leaves <- geom_point(
   data = leaf, 
   mapping = aes(coord_x, coord_y, colour = seg_col),
   colour = "white",
-  size = 2, 
+  size = 5,  #adjusting the size of the trees
   stroke = 0
 )
 
@@ -41,7 +41,7 @@ triangle <- polygon_layer(
   x = c(-4, 2, 2), 
   y = c(0, 0, 6), 
   fill = "white",
-  alpha = 1
+  alpha = 3 #adjusting the transparency
 )
 
 base <- ggplot() + 

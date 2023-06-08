@@ -51,3 +51,4 @@ perlin_blob <- function(n = 100,
 set.seed(3); 
 pic <- perlin_blob(freq_init = .4) |> show_polygon(FALSE)
 plot(pic)
+

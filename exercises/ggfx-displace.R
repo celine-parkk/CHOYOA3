@@ -2,12 +2,12 @@
 library(ggplot2)
 library(ggfx)
 
-polygon_layer <- function(x, y, fill = "white", alpha = .5) {
+polygon_layer <- function(x, y, fill = "white", alpha = .3) { #adjusting the transparency
   geom_polygon(aes(x, y), fill = fill, alpha = alpha)
 }
-poly1 <- polygon_layer(x = c(1, 0, 0), y = c(0, 0, 1))
-poly2 <- polygon_layer(x = c(0, 1, 1), y = c(0, 0, 1))
-poly3 <- polygon_layer(x = c(.3, 1, 1), y = c(0, 0, .7))
+poly1 <- polygon_layer(x = c(3, 0, 0), y = c(0, 0, 1)) #creating more layers of the polygon
+poly2 <- polygon_layer(x = c(0, 1, 1), y = c(0, 0, 1)) 
+poly3 <- polygon_layer(x = c(.3, 2, 1), y = c(0, 0, .7))
 poly4 <- polygon_layer(x = c(0, 0, .7), y = c(.3, 1, 1))
 
 base <- ggplot() + 
@@ -16,9 +16,9 @@ base <- ggplot() +
   theme(panel.background = element_rect(fill = "#333333"))
 
 text <- geom_text(
-  mapping = aes(0.5, 0.5, label = "ART"), 
+  mapping = aes(0.5, 0.5, label = "CELINE"), #making my name be displaced
   size = 60, 
-  colour = "black", 
+  colour = "gray", #adjusting the color of the text
   fontface = "bold"
 )
 

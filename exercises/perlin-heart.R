@@ -8,11 +8,6 @@ library(tictoc)
 library(ggthemes)
 library(gifski)
 
-sample_canva <- function(seed = NULL) {
-  if(!is.null(seed)) set.seed(seed)
-  sample(ggthemes::canva_palettes, 1)[[1]]
-}
-
 show_polygon <- function(polygon, show_vertices = TRUE, ...) {
   
   pic <- ggplot(polygon, aes(x, y)) +
@@ -70,26 +65,12 @@ perlin_heart <- function(n = 100,
   )
 }
 
-perlin_heart_grid <- function(nx = 10, ny = 6, seed = NULL) {
-  if(!is.null(seed)) set.seed(seed)
-  
-  heart_settings <- expand_grid(
-    r_min = .3, 
-    r_max = .4, 
-    x_shift = 1:nx, 
-    y_shift = 1:ny
-  ) |>
-    mutate(id = row_number()) 
-  
-  heart_data <-  pmap_dfr(heart_settings, perlin_heart)
-  
-  heart_data |>
-    ggplot(aes(x, y, group = id, fill = sample(id))) +
-    geom_polygon(size = 0, show.legend = FALSE) +
-    theme_void() +
-    scale_fill_gradientn(colours = sample_canva(seed)) +
-    coord_equal(xlim = c(0, nx + 1), ylim = c(0, ny + 1))
-}
+set.seed(3)
+pic1 <- perlin_heart(freq_init = 0.4) |> show_polygon(FALSE)
+pic2 <- perlin_heart(freq_init = 0.2, octaves = 20) |> show_polygon(FALSE) #adjusting the qualitative parameters of the figure
+pic3 <- perlin_heart(freq_init = 0.6, octaves = 3) |> show_polygon(FALSE)
 
-pic <- perlin_heart_grid(seed = 451)
-plot(pic)
+# Plotting the results
+plot(pic1)
+plot(pic2)
+plot(pic3)

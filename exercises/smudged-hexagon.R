@@ -131,19 +131,33 @@ smudged_hexagon <- function(seed, noise1 = 0, noise2 = 2, noise3 = 0.5) {
 }
 
 
+triangle <- transpose(tibble(
+  x = c(0, 1, 0.5, 0),
+  y = c(0, 0, 1, 0),
+  seg_len = c(1, 1, 1, 0)
+))
+
+splotch_triangle <- function(seed, layers = 20) {
+  set.seed(seed)
+  triangle |>  #creating a triangle to replace the polygon
+    grow_polygon_l(iterations = 10, noise = .5, seed = seed) |>
+    grow_multipolygon_l(n = layers, iterations = 500, noise = .8, seed = seed) 
+}
+
 tic()
-dat <- smudged_hexagon(seed = 88)
-pic <- dat |> show_multipolygon(fill = "#d4379005")
+dat_triangle <- splotch_triangle(seed = 1)
+pic_triangle <- dat_triangle |> show_multipolygon(fill = "black", alpha = .2) #adjusting the splotch code to create a triangle
 ggsave(
-  filename = here("output", "smudged-hexagon.png"), 
-  plot = pic,
+  filename = here("output", "splotch_triangle.png"), 
+  plot = pic_triangle, #plotting the pic of a triangle
   width = 2000,
   height = 2000,
   units = "px",
   dpi = 300,
-  bg = "#222222"
+  bg = "black"
 )
 toc()
+plot(pic_triangle)
 
 
 

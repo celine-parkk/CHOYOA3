@@ -8,6 +8,11 @@ library(tictoc)
 library(ggthemes)
 library(gifski)
 
+sample_canva <- function(seed = NULL) {
+  if(!is.null(seed)) set.seed(seed)
+  sample(ggthemes::canva_palettes, 1)[[1]]
+}
+
 show_polygon <- function(polygon, show_vertices = TRUE, ...) {
   
   pic <- ggplot(polygon, aes(x, y)) +
@@ -45,7 +50,7 @@ perlin_heart <- function(n = 100,
                          y_shift = 0,
                          id = NA,
                          seed = NULL) {
-  if(!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) set.seed(seed)
   tibble(
     angle = seq(0, 2*pi, length.out = n),
     x_base = cos(angle),
@@ -57,14 +62,44 @@ perlin_heart <- function(n = 100,
       noise = gen_perlin, 
       fractal = fbm, 
       octaves = octaves
-    ) |>
+    ) %>%
       normalise_radius(r_min, r_max),
-    x = radius * heart_x(angle) + x_shift,
-    y = radius * heart_y(angle) + y_shift,
-    id = id
+    x = radius * heart_x(angle) + x_shift + rnorm(n, mean = 0, sd = 0.02),  #using rnorm to add random noise to x position
+    y = radius * heart_y(angle) + y_shift + rnorm(n, mean = 0, sd = 0.02),  #using rnorm to add random noise to y position
+    id = id #mean controls the mean value of the noise, and sd measures the standard deviation
   )
 }
 
-set.seed(3); 
-pic <- perlin_heart(freq_init = .4) |> show_polygon(FALSE)
+
+perlin_heart_grid <- function(nx = 10, ny = 3, seed = NULL) { #only showing half of the hearts (changing 6 to 3)
+  if(!is.null(seed)) set.seed(seed)
+  
+  heart_settings <- expand_grid(
+    r_min = .3, 
+    r_max = .4, 
+    x_shift = 1:nx, 
+    y_shift = 1:ny
+  ) |>
+    mutate(id = row_number()) 
+  
+  heart_data <-  pmap_dfr(heart_settings, perlin_heart)
+  
+  heart_data |>
+    ggplot(aes(x, y, group = id, fill = sample(id))) +
+    geom_polygon(size = 0, show.legend = FALSE) +
+    theme_void() +
+    scale_fill_gradientn(colours = sample_canva(seed)) +
+    coord_equal(xlim = c(0, nx + 1), ylim = c(0, ny + 1))
+}
+
+set.seed(1); 
+perlin_heart(
+  n = 1000,
+  freq_init = 10, #using freq_init to adjust the overall noise level to create rough edges
+  r_min = .95, 
+  r_max = 1
+) |> 
+  show_polygon(FALSE)
+
+pic <- perlin_heart_grid(seed = 451)
 plot(pic)

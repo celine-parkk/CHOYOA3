@@ -33,7 +33,7 @@ perturb <- function(path, noise = .01, span = .1) {
     )
 }
 
-brush <- function(path, bristles = 100, seed = 1, ...) {
+brush <- function(path, bristles = 50, seed = 1, ...) { #adjusting the bristles to make it smaller
   set.seed(seed)
   dat <- list()
   for(i in 1:bristles) {
@@ -42,7 +42,7 @@ brush <- function(path, bristles = 100, seed = 1, ...) {
   return(bind_rows(dat, .id = "id"))
 }
 
-stroke <- function(dat, geom = geom_path, colour = "white", ...) {
+stroke <- function(dat, geom = geom_path, colour = "purple", ...) {
   dat |>  
     ggplot(aes(
       x = x, 
@@ -66,7 +66,7 @@ stroke <- function(dat, geom = geom_path, colour = "white", ...) {
     ))
 }
 
-path <- smooth_path(seed = 123)
+path <- smooth_path(seed = 1) #adjusting the ssed to make the stroke more random
 pic <- path |> brush() |> stroke()
 plot(pic)
 

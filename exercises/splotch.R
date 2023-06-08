@@ -77,24 +77,25 @@ show_multipolygon <- function(polygon, fill, alpha = .02, ...) {
     theme_void()
 }
 
-splotch <- function(seed, layers = 10) {
+triangle <- transpose(tibble(
+  x = c(0, 1, 0.5, 0),
+  y = c(0, 0, 1, 0),
+  seg_len = c(1, 1, 1, 0)
+))
+
+splotch_triangle <- function(seed, layers = 20) {
   set.seed(seed)
-  square_l <- transpose(tibble(
-    x = c(0, 1, 1, 0, 0),
-    y = c(0, 0, 1, 1, 0),
-    seg_len = c(1, 1, 1, 1, 0)
-  ))
-  square_l |> 
+  triangle |>  #creating a triangle to replace the polygon
     grow_polygon_l(iterations = 10, noise = .5, seed = seed) |>
     grow_multipolygon_l(n = layers, iterations = 500, noise = .8, seed = seed) 
 }
 
 tic()
-dat <- splotch(seed = 1)
-pic <- dat |> show_multipolygon(fill = "white", alpha = .2)
+dat_triangle <- splotch_triangle(seed = 1)
+pic_triangle <- dat_triangle |> show_multipolygon(fill = "black", alpha = .2) #adjusting the splotch code to create a triangle
 ggsave(
-  filename = here("output", "splotch.png"), 
-  plot = pic,
+  filename = here("output", "splotch_triangle.png"), 
+  plot = pic_triangle, #plotting the pic of a triangle
   width = 2000,
   height = 2000,
   units = "px",
@@ -102,6 +103,14 @@ ggsave(
   bg = "black"
 )
 toc()
+plot(pic_triangle)
+
+#Example 1
+#Adding more numbers to the layer argument adds more layers of polygons, which thus affects the transparency of the polygons
+
+#Example 3
+#The mutate() function helps to switch the position along the x-axis for each polygon
+#The arrange() function ensures that the polygons are plotted in a specific order in order to make sure all the polygons are in the right order
 
 
 
