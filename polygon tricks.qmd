@@ -40,6 +40,7 @@ show_polygon <- function(polygon, show_vertices = TRUE, ...) { #simple plotting 
 
 show_polygon(square) #creating a square polygon
 ```
+
 ```{r}
 sample_edge <- function(polygon) {
   sample(nrow(polygon), 1, prob = polygon$seg_len)
@@ -101,6 +102,7 @@ polygon <- insert_edge(polygon, noise = .5); show_polygon(polygon)
 polygon <- insert_edge(polygon, noise = .5); show_polygon(polygon)
 polygon <- insert_edge(polygon, noise = .5); show_polygon(polygon)
 ```
+
 ```{r}
 grow_polygon <- function(polygon, iterations, noise, seed = NULL) { #inserting edges into a polygon for a fixed number of iterations
   if(!is.null(seed)) set.seed(seed) #generating random numbers
@@ -120,6 +122,7 @@ square |>
   grow_polygon(iterations = 1000, noise = .5, seed = 2) |> 
   show_polygon(show_vertices = FALSE)
 ```
+
 ```{r}
 grow_multipolygon <- function(base_shape, n, seed = NULL, ...) {
   if(!is.null(seed)) set.seed(seed)
@@ -146,4 +149,3 @@ toc()
 
 show_multipolygon(dat, fill = "#d43790")
 ```
-

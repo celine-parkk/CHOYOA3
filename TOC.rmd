@@ -8,18 +8,36 @@ output:
 ---
 
 
-## Table of Contents
+## Getting Started {.tabset}
+
+### Exercise 1
 
 - [Get Started Exercise 1](https://github.com/celine-parkk/CHOYOA3/blob/main/choyoa3.qmd)
+
+### Exercise 2
+
 - [Get Started Exercise 2](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/polar-art.R)
+
+### Exercise 3
+
 - [Get Started Exercise 3](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/palette-generators.R)
 
+### Exercise 4 
 
-- [Section 3](https://github.com/celine-parkk/CHOYOA3/blob/main/artwork.html)
+- [Get Started Exercise 4](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/polar-styled-plots.R)
 
 
+## Polygon Tricks {.tabset}
+
+### Exercise 1
+
+- [Polygon Tricks (grow.polygon)](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/grow-polygon.R)
+- [Polygon Tricks (grow-multipolygons)](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/grow-multipolygon.R)
 
 
+### Exercise 2
+- [Polygon Tricks (splotch.R)](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/splotch.R)
+- [Polygon Tricks (smudged_hexagon)](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/smudged-hexagon.R)
 
 
 
