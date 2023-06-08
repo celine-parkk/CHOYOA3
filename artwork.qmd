@@ -11,44 +11,75 @@ library(tibble)
 library(ggplot2)
 library(ggforce)
 library(flametree)
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(tibble)
+library(ggplot2)
+library(ambient)
+library(tictoc)
+library(ggthemes)
+library(gifski)
 ```
 
 ```{r}
-library(ggplot2)
+library(ggplot2) #installing libraryes
 library(ggforce)
+library(e1071)
 
 tree <- flametree_grow(
-  seed = 286,
+  seed = 286, #adjusting the randomness of the angle of the tree
   time = 12,
-  angle = c(-15, 15, 30),
-  split = 2,
+  angle = c(-15, 15, 30), #adjusting the angle of the tree
+  split = 2, #adjusting the split of the tree
   trees = 1
 )
 
-leaf <- tree |> filter(id_leaf == TRUE)
+leaf <- tree |> filter(id_leaf == TRUE) #creating the leaves
 
-base <- ggplot() + 
+base <- ggplot() +  #creaing the base of the tree
   scale_size_identity() + 
-  theme_void() + 
+  theme_void() + #getting rid of the base
   coord_equal()
 
 leaves <- geom_point(
   mapping = aes(coord_x, coord_y),
   data = leaf, 
-  size = 1.3, 
+  size = 1.3,  #adjusting the size
   stroke = 0, 
-  colour = "pink" #changing the colors of the leaves
+  colour = "pink" #adjusting the color of the leaves to pink
 )
 
 trunk <- geom_bezier(
   mapping = aes(coord_x, coord_y, group = id_pathtree, size = seg_wid),
   data = tree, 
-  lineend = "round",
-  show.legend = FALSE
-  colour = "brown" #changing the colors of the trunk
+  lineend = "round", #adjusting the shape of the trunk
+  show.legend = FALSE,
+  colour = "brown" #adjusting the color of the trunk
 )
 
-plot(base + trunk + leaves)
+smooth_loess <- function(x, span) { #creating a smooth curve
+  n <- length(x)
+  dat <- tibble(time = 1:n, walk = x)
+  mod <- loess(walk ~ time, dat, span = span)
+  predict(mod, tibble(time = 1:n))
+}
+
+smooth_path <- function(n = 1000, smoothing = .7, seed = NULL) { 
+  if(!is.null(seed)) set.seed(seed)
+  tibble(
+    x = smooth_loess(rbridge(1, n), span = smoothing), #creating smooth lines
+    y = smooth_loess(rbridge(1, n), span = smoothing),
+    stroke = 1 #adjusting the stroke of the line
+  )
+}
+
+path <- smooth_path(seed = 50) #adjusting the randomness of the path
+
+combined_plot <- base + trunk + leaves + geom_path(data = path, aes(x, y), colour = "black", size = 2) #creating a combiined plot with the tree
+
+plot(combined_plot)
+
 
 
 
