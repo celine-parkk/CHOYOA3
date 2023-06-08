@@ -5,7 +5,7 @@
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
-- [File](~/github/CHOYOA3/artwork.html)
+- [File](file:///Users/celinepark/github/CHOYOA3/artwork.html)
 
 ## Introduction
 This section provides an introduction to the project.
@@ -23,7 +23,7 @@ Guidelines for contributing to the project can be found in this section.
 Information about the project's license is mentioned here.
 
 ## File
-[here](~/CHOYOA3/exercises/splotch.R).
+[here](file:///Users/celinepark/github/CHOYOA3/artwork.html).
 
 
 
