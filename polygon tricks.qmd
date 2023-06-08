@@ -1,3 +1,10 @@
+---
+title: "polygon tricks"
+format: html
+editor: visual
+---
+
+```{r}
 library(dplyr)
 library(purrr)
 library(tidyr)
@@ -7,38 +14,47 @@ library(ambient)
 library(tictoc)
 library(ggthemes)
 library(gifski)
+```
 
-square <- tibble(
+```{r}
+square <- tibble( #creating a square tibble that contains x and y columns
   x = c(0, 1, 1, 0, 0),
   y = c(0, 0, 1, 1, 0),
-  seg_len = c(1, 1, 1, 1, 0)
+  seg_len = c(1, 1, 1, 1, 0) #specifying the length of the edge
 )
+```
 
-show_polygon <- function(polygon, show_vertices = TRUE, colour = "white", ...) { #adjusting color of the polygon
+```{r}
+show_polygon <- function(polygon, show_vertices = TRUE, ...) { #simple plotting function to display a polygon
   
   pic <- ggplot(polygon, aes(x, y)) +
-    geom_polygon(fill = NA, colour = colour, show.legend = FALSE, ...) + 
+    geom_polygon(colour = "black", fill = NA, show.legend = FALSE, ...) + #adjusting the color
     coord_equal() + 
     theme_void()
   
   if(show_vertices == TRUE) {
-    pic <- pic + geom_point(size = 3, colour = colour) #making the geom points bigger
+    pic <- pic + geom_point(colour = "black", size = 2)
   }
   return(pic)
 }
 
+show_polygon(square) #creating a square polygon
+```
+```{r}
 sample_edge <- function(polygon) {
   sample(nrow(polygon), 1, prob = polygon$seg_len)
-}
+} #break longer edges of polygon
 
 edge_length <- function(x1, y1, x2, y2) {
-  sqrt((x1 - x2)^2 + (y1 - y2)^2)
+  sqrt((x1 - x2)^2 + (y1 - y2)^2) #break an edge into two edges
 }
 
 edge_noise <- function(size) {
   runif(1, min = -size/2, max = size/2)
-}
+} #returns a random number between -size/2 and size/2
+```
 
+```{r}
 insert_edge <- function(polygon, noise) {
   
   # sample and edge and remember its length
@@ -79,12 +95,32 @@ insert_edge <- function(polygon, noise) {
   )
 }
 
-grow_polygon <- function(polygon, iterations, noise, seed = NULL) {
-  if(!is.null(seed)) set.seed(seed)
+set.seed(2)
+polygon <- square 
+polygon <- insert_edge(polygon, noise = .5); show_polygon(polygon)
+polygon <- insert_edge(polygon, noise = .5); show_polygon(polygon)
+polygon <- insert_edge(polygon, noise = .5); show_polygon(polygon)
+```
+```{r}
+grow_polygon <- function(polygon, iterations, noise, seed = NULL) { #inserting edges into a polygon for a fixed number of iterations
+  if(!is.null(seed)) set.seed(seed) #generating random numbers
   for(i in 1:iterations) polygon <- insert_edge(polygon, noise)
   return(polygon)
 }
+```
 
+```{r}
+square |> 
+  grow_polygon(iterations = 30, noise = .5, seed = 2) |> 
+  show_polygon(show_vertices = FALSE)
+square |> 
+  grow_polygon(iterations = 100, noise = .5, seed = 2) |> #creating recursively deformed polygon
+  show_polygon(show_vertices = FALSE)
+square |> 
+  grow_polygon(iterations = 1000, noise = .5, seed = 2) |> 
+  show_polygon(show_vertices = FALSE)
+```
+```{r}
 grow_multipolygon <- function(base_shape, n, seed = NULL, ...) {
   if(!is.null(seed)) set.seed(seed)
   polygons <- list()
@@ -95,18 +131,19 @@ grow_multipolygon <- function(base_shape, n, seed = NULL, ...) {
   polygons
 }
 
-show_multipolygon <- function(polygon, fill, alpha = .05, ...) { #adjusting size of the polygon
+show_multipolygon <- function(polygon, fill, alpha = .02, ...) {
   ggplot(polygon, aes(x, y, group = id)) +
     geom_polygon(colour = NA, alpha = alpha, fill = fill, ...) + 
     coord_equal() + 
     theme_void()
 }
 
-# simplified version of the one in the workshop
 tic()
 dat <- square |> 
-  grow_polygon(iterations = 200, noise = .7, seed = 2) |> #adjusting iterations and seed of the polygon
-  grow_multipolygon(n = 10, iterations = 300, noise = 1, seed = 2)
-pic <- show_multipolygon(dat, fill = "blue", alpha = .2) #changing the color of the polygon
-plot(pic)
+  grow_polygon(iterations = 100, noise = .5, seed = 2) |>
+  grow_multipolygon(n = 50, iterations = 1000, noise = 1, seed = 2)
 toc()
+
+show_multipolygon(dat, fill = "#d43790")
+```
+

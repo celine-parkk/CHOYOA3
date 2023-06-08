@@ -8,6 +8,7 @@ library(tictoc)
 library(ggthemes)
 library(gifski)
 
+#Exercise 1
 square <- tibble(
   x = c(0, 1, 1, 0, 0),
   y = c(0, 0, 1, 1, 0),
@@ -89,7 +90,7 @@ grow_polygon <- function(polygon, iterations, noise, seed = NULL) {
 
 # modify this code
 pic <- square |> 
-  grow_polygon(iterations = 1000, noise = .5, seed = 2) |> 
+  grow_polygon(iterations = 2000, noise = .5, seed = 2) |> #adjusting iterations, noise, and seed
   show_polygon(show_vertices = FALSE)
 
 plot(pic)

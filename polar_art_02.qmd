@@ -1,6 +1,10 @@
-library(ggplot2)
-library(tibble)
-
+---
+title: "polar_art_02.R"
+format: html
+editor: visual
+---
+Modifying the polar art function to create a new system
+```{r}
 polar_art <- function(seed, n, palette) {
   
   # set the state of the random number generator
@@ -28,12 +32,12 @@ polar_art <- function(seed, n, palette) {
       colour = shade,
       size = size
     )) +
-    geom_segment(show.legend = FALSE) +
+    geom_line(show.legend = FALSE) + #editing it so that the plot creates lines instead of circles
     coord_polar() +
     scale_y_continuous(expand = c(0, 0)) +
     scale_x_continuous(expand = c(0, 0)) + 
     scale_colour_gradientn(colours = palette) + 
-    scale_size(range = c(0, 10)) + 
+    scale_size(range = c(0, 20)) + #changing the scale size to make the elements bigger
     theme_void()
 }
 
@@ -43,18 +47,5 @@ polar_art(
   palette = c("red", "black", "white")
 )
 
-polar_art(
-  seed = 5, #changing the seed creates a random generation of numbers
-  n = 60, #creating 60 numbers
-  palette = c("blue", "purple", "white") #changing the palette colors
-)
+```
 
-
-polar_art(seed = 4, #creating a different random generation
-          n = 800, #creating 800 numbers/elements
-          palette = c("light green", "grey", "white")) #changing the palette colors
-
-
-polar_art(seed = 4, #creating a different random generation
-          n = 450, #creating 800 numbers/elements
-          palette = c("light green", "purple", "white")) #changing the palette colors
