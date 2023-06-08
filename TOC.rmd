@@ -1,0 +1,22 @@
+---
+title: "TOC"
+output:
+  html_document:
+    toc: true
+    theme: united
+
+---
+
+
+## Table of Contents
+
+- [Get Started Exercise 1]()
+- [Section 2](path/to/section2/file.md)
+- [Section 3](https://github.com/celine-parkk/CHOYOA3/blob/main/artwork.html)
+
+
+
+
+
+
+

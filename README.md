@@ -1,30 +1,18 @@
-# Table of Contents
+## Table of Contents
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [File](file:///Users/celinepark/github/CHOYOA3/artwork.html)
+- [Section 1]()
+- [Section 2](path/to/section2/file.md)
+- [Section 3]("/github/CHOYOA3/artwork.html")
 
-## Introduction
-This section provides an introduction to the project.
+## Section 1
 
-## Installation
-Instructions on how to install the project can be found here.
 
-## Usage
-This section explains how to use the project.
 
-## Contributing
-Guidelines for contributing to the project can be found in this section.
+## Section 2
 
-## License
-Information about the project's license is mentioned here.
 
-## File
-[here](file:///Users/celinepark/github/CHOYOA3/artwork.html).
 
+## Section 3
 
 
 

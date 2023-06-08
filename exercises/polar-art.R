@@ -56,5 +56,5 @@ polar_art(seed = 4, #creating a different random generation
 
 
 polar_art(seed = 4, #creating a different random generation
-          n = 450, #creating 800 numbers/elements
+          n = 450, #creating 450 numbers/elements
           palette = c("light green", "purple", "white")) #changing the palette colors
