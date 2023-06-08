@@ -10,8 +10,11 @@ output:
 
 ## Table of Contents
 
-- [Get Started Exercise 1]()
-- [Section 2](path/to/section2/file.md)
+- [Get Started Exercise 1](https://github.com/celine-parkk/CHOYOA3/blob/main/choyoa3.qmd)
+- [Get Started Exercise 2](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/polar-art.R)
+- [Get Started Exercise 3](https://github.com/celine-parkk/CHOYOA3/blob/main/exercises/palette-generators.R)
+
+
 - [Section 3](https://github.com/celine-parkk/CHOYOA3/blob/main/artwork.html)
 
 
